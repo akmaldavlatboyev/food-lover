@@ -1,0 +1,99 @@
+/* Asosiy qoidalar */
+.container {
+    width: 1000px;
+    padding: 20px;
+}
+
+/* Responsiv qoida */
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+}
+
+
+/* style.css faylingizga qo'shing */
+
+/* Umumiy uslublar */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Mobil (0px - 768px) */
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .content {
+    text-align: center;
+    padding: 20px;
+  }
+
+  .menu-items {
+    flex-direction: column;
+  }
+
+  .menu-item {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .contact-info, .promotion__timer {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* Planshet (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .menu-items-left, .menu-items-right {
+    width: 100%;
+  }
+
+  .menu-item {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+/* Katta ekranlar uchun (>1024px) */
+@media (min-width: 1025px) {
+  .container {
+    max-width: 1400px;
+  }
+}
+
+
+
+#navbar nav ul {
+    display: none;
+    flex-direction: column;
+  }
+  
+  #navbar nav.active ul {
+    display: flex;
+  }
+
+  
+  @media (max-width: 768px) {
+    .tabcontainer {
+      flex-direction: column;
+    }
+  
+    .tab_content img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+  
