@@ -880,7 +880,7 @@ form button {
 
 .modal_fade {
 	animation-name: modalFade;
-	animation-duration: .5s;
+	animation-duration: 0.5s;
 }
 
 @keyframes modalFade {
@@ -916,6 +916,8 @@ form button {
 	display: inline-block;
 	box-sizing: border-box;
 	animation: rotation 1s linear infinite;
+	display: block;
+	margin: 0 auto;
 }
 
 @keyframes rotation {
@@ -926,3 +928,4 @@ form button {
 		transform: rotate(360deg);
 	}
 }
+  
