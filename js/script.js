@@ -47,7 +47,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	}, 1500)
 
 	// Timer
-	
+
 	const deadline = '2024-02-01'
 
 	function getTimeRemaining(endtime) {
@@ -60,10 +60,10 @@ window.addEventListener('DOMContentLoaded', () => {
 			minutes = 0
 			seconds = 0
 		} else {
-			days = Math.floor(time / (1000 * 60 * 60 * 24)),
-			hours = Math.floor((time / (1000 * 60 * 60)) % 24),
-			minutes = Math.floor((time / (1000 * 60)) % 60),
-			seconds = Math.floor((time / 1000) % 60)
+			;(days = Math.floor(time / (1000 * 60 * 60 * 24))),
+				(hours = Math.floor((time / (1000 * 60 * 60)) % 24)),
+				(minutes = Math.floor((time / (1000 * 60)) % 60)),
+				(seconds = Math.floor((time / 1000) % 60))
 		}
 
 		return {
@@ -112,43 +112,43 @@ window.addEventListener('DOMContentLoaded', () => {
 	// Modal
 
 	const modalOpenBtns = document.querySelectorAll('[data-modal]'),
-		modal = document.querySelector(".modal"),
-		modalCloseBtn = document.querySelector("[data-modal-close]"),
-		modalContent = document.querySelector(".modal__content")
+		modal = document.querySelector('.modal'),
+		modalContent = document.querySelector('.modal__content')
 
 	function openModal() {
-		modalContent.classList.add("modal_fade")
-		modal.classList.add("show")
-		modal.classList.remove("hide")
-		document.body.style.overflow = "hidden"
+		modalContent.classList.add('modal_fade')
+		modal.classList.add('show')
+		modal.classList.remove('hide')
+		document.body.style.overflow = 'hidden'
 		clearInterval(modalTimerId)
 	}
 
 	function closeModal() {
-		modal.classList.add("hide")
-		modal.classList.remove("show")
-		document.body.style.overflow = ""
+		modal.classList.add('hide')
+		modal.classList.remove('show')
+		document.body.style.overflow = ''
 	}
 
 	modalOpenBtns.forEach(btn => {
-		btn.addEventListener("click", openModal)
+		btn.addEventListener('click', openModal)
 	})
 
-	modalCloseBtn.addEventListener("click", closeModal)
-
-	modal.addEventListener("click", (event) => {
-		if(event.target === modal){
+	modal.addEventListener('click', event => {
+		if (
+			event.target === modal ||
+			event.target.getAttribute('data-modal-close') === ''
+		) {
 			closeModal()
 		}
 	})
 
-	document.addEventListener("keydown", (event) => {
-		if(event.code === "Escape" && modal.classList.contains("show")) {
+	document.addEventListener('keydown', event => {
+		if (event.code === 'Escape' && modal.classList.contains('show')) {
 			closeModal()
 		}
 	})
 
-	const modalTimerId = setTimeout(openModal, 5000)
+	const modalTimerId = setTimeout(openModal, 50000)
 
 	// Class
 
@@ -165,12 +165,18 @@ window.addEventListener('DOMContentLoaded', () => {
 		}
 
 		formatToUSD() {
-			this.discount = this.discount.toLocaleString("en-US", {style:"currency", currency:"USD"})
-			this.sale = this.sale.toLocaleString("en-US", {style:"currency", currency:"USD"})
+			this.discount = this.discount.toLocaleString('en-US', {
+				style: 'currency',
+				currency: 'USD',
+			})
+			this.sale = this.sale.toLocaleString('en-US', {
+				style: 'currency',
+				currency: 'USD',
+			})
 		}
 
 		render() {
-			const element = document.createElement("div")
+			const element = document.createElement('div')
 			element.innerHTML = `
 				<img src="${this.src}" alt="${this.alt}">
 				<div>
@@ -186,33 +192,113 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	const offers = [
 		{
-			src: "./img/offer1.png",
-			alt: "Quattro Pasta",
-			title: "Quattro Pasta",
-			descr: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, quibusdam.",
+			src: './img/offer1.png',
+			alt: 'Quattro Pasta',
+			title: 'Quattro Pasta',
+			descr:
+				'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, quibusdam.',
 			discount: 55,
 			sale: 20,
 		},
 		{
-			src: "./img/offer2.png",
-			alt: "Vegertarian Pasta",
-			title: "Vegertarian Pasta",
-			descr: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, quibusdam.",
+			src: './img/offer2.png',
+			alt: 'Vegertarian Pasta',
+			title: 'Vegertarian Pasta',
+			descr:
+				'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, quibusdam.',
 			discount: 75,
 			sale: 25,
 		},
 		{
-			src: "./img/offer3.png",
-			alt: "Gluten-Free Pasta",
-			title: "Gluten-Free Pasta",
-			descr: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, quibusdam.",
+			src: './img/offer3.png',
+			alt: 'Gluten-Free Pasta',
+			title: 'Gluten-Free Pasta',
+			descr:
+				'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam, quibusdam.',
 			discount: 25,
 			sale: 15,
-		}
+		},
 	]
 
 	offers.forEach(offer => {
-		const {src, alt,descr,discount,sale,title} = offer
-		new OfferMenu(src,alt,title,descr,discount,sale,".offers-items").render()
+		const { src, alt, descr, discount, sale, title } = offer
+		new OfferMenu(
+			src,
+			alt,
+			title,
+			descr,
+			discount,
+			sale,
+			'.offers-items'
+		).render()
 	})
+
+	// FORM
+
+	const form = document.querySelector('form'),
+		telegramTokenBot = '7766463006:AAFTTsfxWUAwqer0c7bcQUlMO8FoUxw52w8',
+		chatId = '7384369025'
+
+	const message = {
+		loading: 'Loading...',
+		success: 'Thanks for contacting with us',
+		failure: 'Something went wrong',
+	}
+
+	form.addEventListener('submit', event => {
+		event.preventDefault()
+
+		const loader = document.createElement('div')
+		loader.classList.add('loader')
+		loader.style.width = '20px'
+		loader.style.height = '20px'
+		loader.style.marginTop = '20px'
+		form.append(loader)
+
+		const formData = new FormData(form)
+
+		const object = {}
+		formData.forEach((value, key) => {
+			object[key] = value
+		})
+
+		fetch(`https://api.telegram.org/bot${telegramTokenBot}/sendMessage`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				chat_id: chatId,
+				text: `Name: ${object.name}. Phone: ${object.phone}`,
+			}),
+		})
+			.then(() => {
+				showStatusMessage(message.success)
+				form.reset()
+			})
+			.catch(() => showStatusMessage(message.failure))
+			.finally(() => loader.remove())
+	})
+
+	function showStatusMessage(message) {
+		const modalDialog = document.querySelector('.modal__dialog')
+
+		modalDialog.classList.add('hide')
+		openModal()
+
+		const statusModal = document.createElement('div')
+		statusModal.classList.add('modal__dialog')
+		statusModal.innerHTML = `
+			<div class="modal__content">
+				<div data-modal-close class="modal__close">&times;</div>
+				<div class="modal__title">${message}</div>
+			</div>
+		`
+
+		document.querySelector('.modal').append(statusModal)
+
+		setTimeout(() => {
+			statusModal.remove()
+			modalDialog.classList.remove('hide')
+			closeModal()
+		}, 3000)
+	}
 })
